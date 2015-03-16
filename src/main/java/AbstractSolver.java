@@ -17,17 +17,14 @@ public abstract class AbstractSolver implements Solver {
         addState(initialState);
         while (hasElements()) {
             State s = nextState();
-            //System.out.println(s.toString());
             if (s.isSolution())
                 return findPath(s);
             visited.add(s);
             Iterable<State> moves = s.getPossibleMoves();
             for (State move : moves) {
-                //System.out.println(move.toString());
                 if (!visited.contains(move))
                     addState(move);
             }
-            //System.out.print("visited nodes = " + visited.size());
         }
         return null;
     }

@@ -8,7 +8,7 @@ public class AStarSolver extends AbstractSolver {
     private PriorityQueue<State> queue = null;
 
     public AStarSolver() {
-        queue = new PriorityQueue<State>(100, new Comparator<State>() {
+        queue = new PriorityQueue<State>(1000, new Comparator<State>() {
             public int compare(State s1, State s2) {
                 //f(x) = distance + heuristic
                 return Double.compare(
@@ -37,6 +37,9 @@ public class AStarSolver extends AbstractSolver {
     @Override
     protected void clearOpen() {
         queue.clear();
+    }
 
+    public int getQueueSize() {
+        return queue.size();
     }
 }

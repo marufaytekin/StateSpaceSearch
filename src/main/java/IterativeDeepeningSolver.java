@@ -6,7 +6,7 @@ import java.util.List;
 
 public class IterativeDeepeningSolver {
     private int depth = 0;
-    private int maxDepth = 100;
+    private int maxDepth = 20;
     private boolean goalFound = false;
     private DepthLimitedSolver dlSolver = new DepthLimitedSolver();
 
@@ -23,6 +23,10 @@ public class IterativeDeepeningSolver {
 
     public int getVisitedStateCount() {
         return dlSolver.getVisitedStateCount();
+    }
+
+    public int getQueueSize() {
+        return dlSolver.getQueueSize();
     }
 
 }

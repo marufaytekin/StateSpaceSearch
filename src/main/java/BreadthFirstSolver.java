@@ -27,4 +27,8 @@ public class BreadthFirstSolver extends AbstractSolver{
     protected void clearOpen() {
         queue.clear();
     }
+
+    public int getQueueSize() {
+        return queue.size();
+    }
 }

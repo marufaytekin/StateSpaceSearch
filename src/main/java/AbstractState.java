@@ -7,16 +7,10 @@ public abstract class AbstractState implements State {
 
     private double distance = 0;
 
-    private boolean isSolve = false;
-
     public AbstractState(State parent) {
         this.parent = parent;
         if (parent != null)
             this.distance = parent.getDistance() + 1;
-    }
-
-    public boolean isSolvable(){
-        return this.isSolve;
     }
 
     public State getParent() {

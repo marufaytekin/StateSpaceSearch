@@ -34,7 +34,7 @@ public class AStarSearch extends AbstractSearch {
     @Override
     protected void addState(State s) {
         if (!queue.contains(s))
-            queue.add(s);
+            queue.offer(s);
         if (queue.size() > maxQueueSize)
             maxQueueSize = queue.size();
     }

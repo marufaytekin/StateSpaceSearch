@@ -21,7 +21,7 @@ public class PuzzleState extends AbstractState {
 
     @Override
     public Iterable<State> getPossibleMoves() {
-        Set<State> moves = new HashSet<State>();
+        Set<State> moves = new HashSet();
         int blank_i = 0;
         int blank_j = 0;
         for (int i=0; i<N; i++) {

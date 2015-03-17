@@ -11,7 +11,7 @@ public class DepthLimitedSearch extends AbstractSearch {
 
     private  int maxQueueSize = 0;
 
-    private int depth = 20; //default depth
+    private int depth = 15; //default depth
 
     public List<State> solve(State initialState, int depth) {
         this.depth = depth;
@@ -41,7 +41,7 @@ public class DepthLimitedSearch extends AbstractSearch {
     }
 
     public int getQueueSize() {
-        return queue.size();
+        return maxQueueSize;
     }
 }
 

@@ -2,15 +2,18 @@ import java.util.Comparator;
 import java.util.PriorityQueue;
 
 /**
- * Created by maruf on 16/03/15.
+ * Created by maruf on 14/03/15.
  */
-public class GreedySolver extends AbstractSolver {
+public class AStarSearch extends AbstractSearch {
+
+    private  int maxQueueSize = 0;
 
     private PriorityQueue<State> queue = null;
 
-    public GreedySolver() {
+    public AStarSearch() {
         queue = new PriorityQueue<State>(1, new Comparator<State>() {
             public int compare(State s1, State s2) {
+                //f(x) = distance + heuristic
                 return Double.compare(
                         s1.getDistance() + s1.getHeuristic(),
                         s2.getDistance() + s2.getHeuristic());
@@ -32,6 +35,8 @@ public class GreedySolver extends AbstractSolver {
     protected void addState(State s) {
         if (!queue.contains(s))
             queue.add(s);
+        if (queue.size() > maxQueueSize)
+            maxQueueSize = queue.size();
     }
 
     @Override
@@ -40,6 +45,7 @@ public class GreedySolver extends AbstractSolver {
     }
 
     public int getQueueSize() {
-        return queue.size();
+        return maxQueueSize;
     }
+
 }

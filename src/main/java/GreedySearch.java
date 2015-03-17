@@ -2,18 +2,20 @@ import java.util.Comparator;
 import java.util.PriorityQueue;
 
 /**
- * Created by maruf on 14/03/15.
+ * Created by maruf on 16/03/15.
  */
-public class UniformCostSolver extends AbstractSolver {
+public class GreedySearch extends AbstractSearch {
+
     private PriorityQueue<State> queue = null;
 
-    public UniformCostSolver() {
-        queue = new PriorityQueue<State>(100000, new Comparator<State>() {
+    private  int maxQueueSize = 0;
+
+    public GreedySearch() {
+        queue = new PriorityQueue<State>(1, new Comparator<State>() {
             public int compare(State s1, State s2) {
-                //f(x) = distance + heuristic
                 return Double.compare(
-                        s1.getDistance(),
-                        s2.getDistance());
+                        s1.getHeuristic(),
+                        s2.getHeuristic());
             }
         });
     }
@@ -32,12 +34,16 @@ public class UniformCostSolver extends AbstractSolver {
     protected void addState(State s) {
         if (!queue.contains(s))
             queue.add(s);
+        if (queue.size() > maxQueueSize)
+            maxQueueSize = queue.size();
     }
 
     @Override
     protected void clearOpen() {
         queue.clear();
+    }
 
+    public int getQueueSize() {
+        return maxQueueSize;
     }
 }
-

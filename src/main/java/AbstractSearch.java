@@ -6,11 +6,11 @@ import java.util.Set;
 /**
  * Created by maruf on 14/03/15.
  */
-public abstract class AbstractSolver implements Solver {
+public abstract class AbstractSearch implements Search {
 
     private Set<State> visited = new HashSet();
 
-    public List<State> solve(State initialState) {
+    public List<State> search(State initialState) {
         //Reset visited and open lists
         visited.clear();
         clearOpen();
@@ -49,5 +49,7 @@ public abstract class AbstractSolver implements Solver {
     protected abstract void addState(State s);
 
     protected abstract void clearOpen();
+
+    protected abstract int getQueueSize();
 
 }

@@ -4,13 +4,13 @@ import java.util.List;
  * Created by maruf on 15/03/15.
  */
 
-public class IterativeDeepeningSolver {
+public class IterativeDeepeningSearch {
     private int depth = 0;
-    private int maxDepth = 20;
+    private int maxDepth = 30;
     private boolean goalFound = false;
-    private DepthLimitedSolver dlSolver = new DepthLimitedSolver();
+    private DepthLimitedSearch dlSolver = new DepthLimitedSearch();
 
-    public List<State> solve(State initialState) {
+    public List<State> search(State initialState) {
         while (!goalFound) {
             List<State> path = dlSolver.solve(initialState, depth);
             if (path != null || depth == maxDepth)

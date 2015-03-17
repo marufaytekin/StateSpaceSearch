@@ -1,18 +1,14 @@
-import java.util.List;
 import java.util.Stack;
 
 /**
- * Created by maruf on 15/03/15.
+ * Created by maruf on 14/03/15.
  */
+public class DepthFirstSearch extends AbstractSearch {
 
-public class DepthLimitedSolver extends AbstractSolver{
+    private  int maxQueueSize = 0;
+
     private Stack<State> queue = new Stack();
-    private int depth = 20; //default depth
 
-    public List<State> solve(State initialState, int depth) {
-        this.depth = depth;
-        return super.solve(initialState);
-    }
     @Override
     protected boolean hasElements() {
         return !queue.isEmpty();
@@ -25,8 +21,10 @@ public class DepthLimitedSolver extends AbstractSolver{
 
     @Override
     protected void addState(State s) {
-        if( (!queue.contains(s)) && (s.getDistance() < this.depth) )
+        if(!queue.contains(s))
             queue.push(s);
+        if (queue.size() > maxQueueSize)
+            maxQueueSize = queue.size();
     }
 
     @Override
@@ -35,7 +33,6 @@ public class DepthLimitedSolver extends AbstractSolver{
     }
 
     public int getQueueSize() {
-        return queue.size();
+        return maxQueueSize;
     }
 }
-

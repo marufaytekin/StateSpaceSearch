@@ -4,16 +4,19 @@ import java.util.PriorityQueue;
 /**
  * Created by maruf on 14/03/15.
  */
-public class AStarSolver extends AbstractSolver {
+public class UniformCostSearch extends AbstractSearch {
+
     private PriorityQueue<State> queue = null;
 
-    public AStarSolver() {
-        queue = new PriorityQueue<State>(1000, new Comparator<State>() {
+    private int maxQueueSize = 0;
+
+    public UniformCostSearch() {
+        queue = new PriorityQueue<State>(1, new Comparator<State>() {
             public int compare(State s1, State s2) {
-                //f(x) = distance + heuristic
+                //Compare according to distance from the root node
                 return Double.compare(
-                        s1.getDistance() + s1.getHeuristic(),
-                        s2.getDistance() + s2.getHeuristic());
+                        s1.getDistance(),
+                        s2.getDistance());
             }
         });
     }
@@ -32,6 +35,8 @@ public class AStarSolver extends AbstractSolver {
     protected void addState(State s) {
         if (!queue.contains(s))
             queue.add(s);
+        if (queue.size() > maxQueueSize)
+            maxQueueSize = queue.size();
     }
 
     @Override
@@ -40,6 +45,7 @@ public class AStarSolver extends AbstractSolver {
     }
 
     public int getQueueSize() {
-        return queue.size();
+        return maxQueueSize;
     }
 }
+

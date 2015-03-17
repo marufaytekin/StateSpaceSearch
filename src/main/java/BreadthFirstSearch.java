@@ -4,8 +4,10 @@ import java.util.Queue;
 /**
  * Created by maruf on 14/03/15.
  */
-public class BreadthFirstSolver extends AbstractSolver{
+public class BreadthFirstSearch extends AbstractSearch {
     private Queue<State> queue = new LinkedList();
+
+    private  int maxQueueSize = 0;
 
     @Override
     protected boolean hasElements() {
@@ -21,6 +23,8 @@ public class BreadthFirstSolver extends AbstractSolver{
     protected void addState(State s) {
         if (!queue.contains(s))
             queue.add(s);
+        if (queue.size() > maxQueueSize)
+            maxQueueSize = queue.size();
     }
 
     @Override

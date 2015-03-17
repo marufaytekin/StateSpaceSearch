@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -9,36 +10,73 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        int [][] tiles0 = new int[][]{{1, 6, 4},{7, 0, 8},{2, 3, 5}};
-        int [][] tiles1 = new int[][]{{5, 2, 3},{4, 7, 0},{8, 6, 1}};
-        int [][] tiles2 = new int[][]{{4, 8, 2},{3, 6, 5},{1, 7, 0}};
-        int [][] tiles3 = new int[][]{{5, 0, 4},{2, 3, 8},{7, 1, 6}};
-        int [][] tiles4 = new int[][]{{5, 7, 4},{3, 0, 8},{1, 6, 2}};
-        int [][] tiles5 = new int[][]{{2, 8, 5},{3, 6, 1},{7, 0, 4}};
-        int [][] tiles6 = new int[][]{{5, 7, 0},{3, 2, 8},{1, 6, 4}};
-        int [][] tiles7 = new int[][]{{5, 8, 7},{1, 4, 6},{3, 0, 2}};
-        int [][] tiles8 = new int[][]{{7, 8, 5},{4, 0, 2},{3, 6, 1}};
-        int [][] tiles9 = new int[][]{{6, 0, 5},{8, 7, 4},{3, 2, 1}};
+        List<int[][]> data = new ArrayList();
 
+        data.add(new int[][]{{0, 1, 3},{4, 2, 5},{7, 8, 6}});
+        data.add(new int[][]{{0, 1, 3},{5, 4, 2},{7, 8, 6}});
+        data.add(new int[][]{{1, 2, 7},{0, 4, 3},{6, 5, 8}});
+        data.add(new int[][]{{3, 1, 0},{5, 2, 4},{7, 8, 6}});
+        data.add(new int[][]{{4, 1, 3},{0, 2, 6},{7, 5, 8}});
+        data.add(new int[][]{{1, 2, 3},{0, 7, 6},{5, 4, 8}});
+        data.add(new int[][]{{2, 3, 5},{1, 0, 4},{7, 8, 6}});
+        data.add(new int[][]{{1, 0, 2},{7, 5, 4},{8, 6, 3}});
+        data.add(new int[][]{{5, 6, 2},{1, 8, 4},{7, 3, 0}});
+        data.add(new int[][]{{5, 1, 8},{2, 7, 3},{4, 0, 6}});
 
-        PuzzleState initial = new PuzzleState(null, tiles1);
-        //AStarSolver solver = new AStarSolver();
-        //DepthFirstSolver solver = new DepthFirstSolver();
-        DepthLimitedSolver solver = new DepthLimitedSolver();
-        //BreadthFirstSolver solver = new BreadthFirstSolver();
-        //IterativeDeepeningSolver solver = new IterativeDeepeningSolver();
-        //UniformCostSolver solver = new UniformCostSolver();
-        //GreedySolver solver = new GreedySolver();
-        List<State> path = solver.solve(initial);
+        AbstractSearch solver;
+        for (int i=0; i<10; i++) {
+            PuzzleState initial = new PuzzleState(null, data.get(i));
+            System.out.println("====================");
+            System.out.println("Start State:" + initial.toString());
+            solver = new AStarSearch();
+            solve(solver, initial);
+            //solver = new DepthFirstSolver();
+            //search(solver, initial);
+            solver = new DepthLimitedSearch();
+            solve(solver, initial);
+            solver = new BreadthFirstSearch();
+            solve(solver, initial);
+            solver = new UniformCostSearch();
+            solve(solver,initial);
+            solver = new GreedySearch();
+            solve(solver, initial);
+            IterativeDeepeningSearch idSolver = new IterativeDeepeningSearch();
+
+            List<State> path = idSolver.search(initial);
+            if (path == null) {
+                System.out.println("-------------------");
+                System.out.println(idSolver.getClass().getName() + ": Goal not found !!!");
+                System.out.println("-------------------");
+            } else {
+                //drawPath(path);
+                System.out.println("-------------------");
+                System.out.println(idSolver.getClass().getName());
+                System.out.println("The Nodes in Memory: " + idSolver.getQueueSize());
+                System.out.println("The cost was: " +
+                        path.get(path.size() - 1).getDistance());
+                System.out.println("visited nodes = " + idSolver.getVisitedStateCount());
+                System.out.println("-------------------");
+            }
+
+        }
+    }
+
+    private static void solve(AbstractSearch solver, State initial)
+    {
+        List<State> path = solver.search(initial);
         if (path == null) {
-            System.out.println(solver.getClass().getName() + ": Goal not found !\n");
+            System.out.println("--------------------------");
+            System.out.println(solver.getClass().getName() + ": Goal not found !!!");
+            System.out.println("--------------------------");
         } else {
-            drawPath(path);
-            System.out.print(solver.getClass().getName() + ": \n");
-            System.out.print("The Nodes in Memory: " + solver.getQueueSize() + "\n");
-            System.out.print("The cost was: " +
-                    path.get(path.size() - 1).getDistance() + "\n");
-            System.out.print("visited nodes = " + solver.getVisitedStateCount());
+            //drawPath(path);
+            System.out.println("--------------------------");
+            System.out.println(solver.getClass().getName());
+            System.out.println("The Nodes in Memory: " + solver.getQueueSize());
+            System.out.println("The cost was: " +
+                    path.get(path.size() - 1).getDistance());
+            System.out.println("visited nodes = " + solver.getVisitedStateCount());
+            System.out.println("--------------------------");
         }
     }
 

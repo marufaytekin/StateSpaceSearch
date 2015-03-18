@@ -17,6 +17,7 @@ public class DepthLimitedSearch extends AbstractSearch {
         this.depth = depth;
         return super.search(initialState);
     }
+
     @Override
     protected boolean hasElements() {
         return !queue.isEmpty();

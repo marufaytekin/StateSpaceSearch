@@ -8,10 +8,9 @@ import java.util.List;
  */
 public class Main {
 
-    static List<int[][]> data = new ArrayList();
-
     public static void main(String[] args) throws IOException {
 
+        List<int[][]> data = new ArrayList();
         data.add(new int[][]{{0, 1, 3},{4, 2, 5},{7, 8, 6}});
         data.add(new int[][]{{1, 0, 3},{4, 2, 5},{7, 8, 6}});
         data.add(new int[][]{{1, 2, 3},{4, 0, 5},{7, 8, 6}});
@@ -22,105 +21,50 @@ public class Main {
         data.add(new int[][]{{2, 3, 5},{1, 0, 4},{7, 8, 6}});
         data.add(new int[][]{{2, 3, 5},{1, 4, 0},{7, 8, 6}});
         data.add(new int[][]{{2, 3, 5},{1, 0, 4},{7, 8, 6}});
-        data.add(new int[][]{{3, 2, 4},{1, 0, 5},{7, 8, 6}});
 
-
-        //data.add(new int[][]{{1, 2, 3},{4, 0, 8},{6, 5, 7}});
-
+        drawDataSet(data);
         AbstractSearch solver;
-        //solver = new AStarSearch();
-        //solve(solver);
-        //solver = new DepthFirstSolver();
-        //search(solver, initial);
-        /*solver = new DepthLimitedSearch();
-        solve(solver);
-        solver = new BreadthFirstSearch();
-        solve(solver);
-        solver = new UniformCostSearch();
-        solve(solver);*/
+        solver = new AStarSearch();
+        solve(solver, data);
+        //solver = new DepthFirstSearch();
+        //solve(solver, data );
         solver = new DepthLimitedSearch();
-        solve(solver);
+        solve(solver, data);
+        solver = new BreadthFirstSearch();
+        solve(solver, data);
+        solver = new UniformCostSearch();
+        solve(solver, data);
         solver = new GreedyBFSearch();
-        solve(solver);
-        IterativeDeepeningSearch idSolver = new IterativeDeepeningSearch();
-        solveIter(idSolver);
+        solve(solver, data);
+        solver = new IterativeDeepeningSearch();
+        solve(solver, data);
 
     }
 
-    private static void solve(AbstractSearch solver)
+    private static void solve(AbstractSearch solver, List<int[][]> data)
     {
-        System.out.println("=================================");
-        System.out.println(solver.getClass().getName());
-        int totalNodesInMemory = 0;
-        int totalCost = 0;
-        int totalVisitedNodes = 0;
-        int cnt = 0;
+        List<Integer> nodesInMemory = new ArrayList() ;
+        List <Double> cost = new ArrayList() ;
+        List <Integer> visitedNodes = new ArrayList() ;
         for (int i=0; i<10; i++) {
             PuzzleState initial = new PuzzleState(null, data.get(i));
             List<State> path = solver.search(initial);
-            System.out.println("");
-            System.out.println("Start State:" + initial.toString());
             if (path == null) {
+                System.out.println("--------------------");
                 System.out.println(solver.getClass().getName() + ": Goal not found !!!");
+                System.out.println("--------------------");
             } else {
                 //drawPath(path);
-                System.out.println("The Nodes in Memory: " + solver.getQueueSize());
-                System.out.println("The cost was: " +
-                        path.get(path.size() - 1).getDistance());
-                System.out.println("visited nodes = " + solver.getVisitedStateCount());
-                totalNodesInMemory +=  solver.getQueueSize();
-                totalCost += path.get(path.size() - 1).getDistance();
-                totalVisitedNodes += solver.getVisitedStateCount();
-                cnt++;
+                nodesInMemory.add(solver.getQueueSize());
+                cost.add(path.get(path.size() - 1).getDistance());
+                visitedNodes.add(solver.getVisitedStateCount());
             }
         }
 
         System.out.println("--------------------");
         System.out.println(solver.getClass().getName());
-        System.out.println("Avg Nodes in Memory: " + (double)totalNodesInMemory / cnt);
-        System.out.println("Avg cost was: " +  (double)totalCost / cnt);
-        System.out.println("Avg visited nodes: " + (double) totalVisitedNodes / cnt);
-        System.out.println("=================================");
-
-    }
-
-    private static void solveIter(IterativeDeepeningSearch idSolver)
-    {
-        System.out.println("=================================");
-        System.out.println(idSolver.getClass().getName());
-        int totalNodesInMemory = 0;
-        int totalCost = 0;
-        int totalVisitedNodes = 0;
-        int cnt = 0;
-        for (int i=0; i<10; i++) {
-            PuzzleState initial = new PuzzleState(null, data.get(i));
-            List<State> path = idSolver.search(initial);
-            System.out.println("");
-            System.out.println("Start State:" + initial.toString());
-            if (path == null) {
-                System.out.println("--------------------");
-                System.out.println(idSolver.getClass().getName() + ": Goal not found !!!");
-                System.out.println("--------------------");
-            } else {
-                //drawPath(path);
-                System.out.println("The Nodes in Memory: " + idSolver.getQueueSize());
-                System.out.println("The cost was: " +
-                        path.get(path.size() - 1).getDistance());
-                System.out.println("visited nodes = " + idSolver.getVisitedStateCount());
-
-                totalNodesInMemory +=  idSolver.getQueueSize();
-                totalCost += path.get(path.size() - 1).getDistance();
-                totalVisitedNodes += idSolver.getVisitedStateCount();
-                cnt++;
-            }
-        }
-
-        System.out.println("--------------------");
-        System.out.println(idSolver.getClass().getName());
-        System.out.println("Avg Nodes in Memory: " + (double)totalNodesInMemory / cnt);
-        System.out.println("Avg cost was: " +  (double)totalCost / cnt);
-        System.out.println("Avg visited nodes: " + (double) totalVisitedNodes / cnt);
-        System.out.println("=================================");
+        System.out.println("Nodes Expanded  : " + visitedNodes.toString() + "  |  ~" + avg(visitedNodes));
+        System.out.println("Nodes in Memory : " + nodesInMemory.toString()+ "  |  ~" + avg(nodesInMemory));
 
     }
 
@@ -133,6 +77,21 @@ public class Main {
             System.out.print(neighbor.manhattan());
         }
         System.out.print("\n");
+    }
+
+    private static double avg(List<Integer> list) {
+        int total = 0;
+        for(int x : list ){
+            total += x;
+        }
+        return (double)total / list.size();
+    }
+
+    private static void drawDataSet(List<int[][]> data ) {
+        for(int[][] puzzle : data ){
+            PuzzleState state = new PuzzleState(null, puzzle);
+            System.out.println(state.toString());
+        }
     }
 
 }

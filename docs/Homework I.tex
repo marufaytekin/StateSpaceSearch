@@ -1,0 +1,105 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{algorithmic}
+\usepackage[table]{xcolor}
+\usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+\usepackage{listings}
+\usepackage{color}
+%\usepackage{algorithm}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage[numbers, sort]{natbib}
+%\usepackage{floatrow}
+\usepackage{graphicx}
+\usepackage{verbatim} 
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage[export]{adjustbox}
+\usepackage{url}
+\usepackage{epsfig}
+\usepackage{multirow}
+\usepackage{pbox}
+
+\pagenumbering{gobble}
+
+\addtolength{\topmargin}{-.975in}
+
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={210mm,297mm},
+ left=20mm,
+ right=20mm,
+ top=20mm,
+ bottom=20mm,
+ }
+ 
+	
+\title {Programming Assignment - I \\6160 Advanced Topics in Artificial Intelligence}
+
+\author{\bf Maruf Aytekin \\
+aaytekin@gmail.com}
+s
+
+\begin{document}
+
+\maketitle
+
+\section{Problem Definition}
+
+Write a program to solve the 8-puzzle problem using the following search algorithms;
+\begin{itemize}
+  \item A* Search
+  \item Breadth-first search
+  \item Uniform-cost search
+  \item Depth-first search
+  \item Iterative deepening search
+  \item Greedy Best Search
+\end{itemize}
+
+\section{Data Set}
+8puzzles that is needs to be less than 15 used as inputs to calculate both the number of nodes expanded and the maximum number of nodes saved in the memory.
+
+\section{Results}
+
+{\setlength{\extrarowheight}{5pt}
+
+\begin{table}[!ht]
+\begin{tabularx}{\textwidth}{l  l  XXXXXXXXXX | l}
+& & \multicolumn{10}{c} {Puzzle (1-10)} & Median \\
+\toprule
+\multirow{2}{*}{A* Search} & Expanded  & 4 & 3 & 2 & 3 & 4 & 5 & 14 & 9 & 8 & 9 &  6.1 \\
+& In Memory & 9 & 9 & 9 & 9 & 9 & 11 & 23 & 23 & 23 & 23 &  14.8 \\
+\hline
+\multirow{2}{*}{\parbox{2.0cm}{Depth First Search}} & Expanded  & 36726& 15& 5965& 13708& 58475& 12076& 16963& 92145& 172918& 13956 & 42294.7 \\
+& In Memory & 25& 25& 25& 25& 25& 25& 25& 28& 28& 28 & 25.9 \\
+\hline
+\multirow{2}{*}{\parbox{2.0cm}{Breadth First Search}} & Expanded  & 32 & 14 & 9 & 11 & 35 & 53 & 160 & 447 & 210 & 451 &  142.2 \\
+& In Memory & 27 & 15 & 11 & 13 & 29 & 47 & 129 & 283 & 152 & 286 &  99.2 \\
+\hline 
+\multirow{2}{*}{\parbox{2.0cm}{Uniform Cost Search}} & Expanded  & 24 & 10 & 6 & 18 & 37 & 66 & 205 & 464 & 227 & 443 &  150.0 \\
+& In Memory & 29 & 29 & 29 & 29 & 33 & 62 & 158 & 307 & 307 & 307 &  129.0 \\
+\hline
+\multirow{2}{*}{\parbox{2.0cm}{Greedy Best Search}} & Expanded  & 4 & 3 & 2 & 3 & 4 & 5 & 7 & 8 & 7 & 8 &  5.1 \\
+& In Memory & 9 & 9 & 9 & 9 & 9 & 11 & 16 & 17 & 17 & 17 &  12.3\\
+\hline
+\multirow{2}{*}{\parbox{2.0cm}{Iterative Deepening Search}} & Expanded  & 36 & 25 & 13 & 40 & 20 & 11 & 13 & 450 & 2461 & 1879 &  494.8 \\
+& In Memory & 8 & 8 & 8 & 8 & 8 & 9 & 15 & 15 & 16 & 16 &  11.1 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Conclusion}
+
+We limited to depth first search because DFS algorithm gets lost or causes out of memory exception most of the time. We limited depth first search by setting 15 as cut-off point.
+
+In terms of expended node numbers A* search and greedy best search seems performed better when they are compared against the others. However, greedy best search gets lost in loops or unable to find a solution. The data set is chosen to make sure greedy search does not get lost.
+
+
+\end{document}
+
+

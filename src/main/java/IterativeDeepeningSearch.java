@@ -4,7 +4,7 @@ import java.util.List;
  * Created by maruf on 15/03/15.
  */
 
-public class IterativeDeepeningSearch {
+public class IterativeDeepeningSearch extends AbstractSearch{
     private int depth = 0;
     private int maxDepth = 30;
     private boolean goalFound = false;
@@ -23,6 +23,27 @@ public class IterativeDeepeningSearch {
 
     public int getVisitedStateCount() {
         return dlSolver.getVisitedStateCount();
+    }
+
+    @Override
+    protected boolean hasElements() {
+        return dlSolver.hasElements();
+    }
+
+    @Override
+    protected State nextState() {
+        return dlSolver.nextState();
+    }
+
+    @Override
+    protected void addState(State s) {
+        dlSolver.addState(s);
+
+    }
+
+    @Override
+    protected void clearOpen() {
+        dlSolver.clearOpen();
     }
 
     public int getQueueSize() {

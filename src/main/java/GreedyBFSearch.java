@@ -29,7 +29,7 @@ public class GreedyBFSearch extends AbstractSearch {
     @Override
     protected State nextState() {
         State best = queue.remove();
-        queue.clear();
+        //queue.clear();
         return best;
     }
 

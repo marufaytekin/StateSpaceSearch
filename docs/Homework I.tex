@@ -159,7 +159,7 @@ The Goal state:
 \multirow{2}{*}{A* Search} & Expanded  & 4 & 3 & 2 & 3 & 4 & 5 & 14 & 9 & 8 & 9 &  6.1 \\
 & In Memory & 9 & 9 & 9 & 9 & 9 & 11 & 23 & 23 & 23 & 23 &  14.8 \\
 \hline
-\multirow{2}{*}{\parbox{2.0cm}{Depth First Search}} & Expanded  & 36726& 15& 5965& 13708& 58475& 12076& 16963& 92145& 172918& 13956 & 42294.7 \\
+\multirow{2}{*}{\parbox{2.0cm}{Depth First Search (15)}} & Expanded  & 36726& 15& 5965& 13708& 58475& 12076& 16963& 92145& 172918& 13956 & 42294.7 \\
 & In Memory & 25& 25& 25& 25& 25& 25& 25& 28& 28& 28 & 25.9 \\
 \hline
 \multirow{2}{*}{\parbox{2.0cm}{Breadth First Search}} & Expanded  & 32 & 14 & 9 & 11 & 35 & 53 & 160 & 447 & 210 & 451 &  142.2 \\
@@ -179,10 +179,9 @@ The Goal state:
 
 \section{Conclusion}
 
-We limited to depth first search because DFS algorithm gets lost or causes out of memory exception most of the time. We limited depth first search by setting 15 as cut-off point.
+In terms of expended node numbers A* search and greedy best search seems performed better when they are compared against the others. However, greedy best search gets lost in loops or unable to find a solution. The data set is chosen from simple puzzles to make sure greedy search does not get lost.
 
-In terms of expended node numbers A* search and greedy best search seems performed better when they are compared against the others. However, greedy best search gets lost in loops or unable to find a solution. The data set is chosen to make sure greedy search does not get lost.
-
+During the tests we limited depth first search(DFS)'s maximum depth to 15 because DFS algorithm gets lost or runs into endless loops which causes out of memory exception most of the time.
 
 \end{document}
 

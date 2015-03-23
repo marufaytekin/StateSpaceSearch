@@ -105,25 +105,6 @@ public class PuzzleState extends AbstractState {
         return s.toString();
     }
 
-    public PuzzleState twin() {        // a board that is obtained by exchanging two adjacent blocks in the same row
-        int[][] twinBoard = new int[N][N];
-        for (int i=0; i<N; i++){
-            for (int j=0; j<N; j++){
-                twinBoard[i][j] = blocks[i][j];
-            }
-        }
-        if (blocks[0][0] != 0 && blocks[0][1] != 0){
-            int temp = twinBoard[0][0];
-            twinBoard[0][0] = twinBoard[0][1];
-            twinBoard[0][1] = temp;
-        }else{
-            int temp = twinBoard[1][0];
-            twinBoard[1][0] = twinBoard[1][1];
-            twinBoard[1][1] = temp;
-        }
-        return new PuzzleState((PuzzleState) this.getParent(), twinBoard);
-    }
-
     public boolean equals(Object that) {
         if (that == this) return true;
         if (that == null) return false;
@@ -138,12 +119,6 @@ public class PuzzleState extends AbstractState {
             }
         }
         return true;
-    }
-
-    public int compareTo(State that) {
-        if (this.equals(that)) return 0;
-        if (this.getDistance() < that.getDistance()) return -1;
-        else return 1;
     }
 
 }

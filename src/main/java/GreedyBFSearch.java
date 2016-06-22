@@ -11,7 +11,7 @@ public class GreedyBFSearch extends AbstractSearch {
     private  int maxQueueSize = 0;
 
     public GreedyBFSearch() {
-        //Greedy Best-First-Search
+        //Greedy Best-Search
         queue = new PriorityQueue<State>(1, new Comparator<State>() {
             public int compare(State s1, State s2) {
                 return Double.compare(
@@ -29,7 +29,7 @@ public class GreedyBFSearch extends AbstractSearch {
     @Override
     protected State nextState() {
         State best = queue.remove();
-        //queue.clear();
+        queue.clear();
         return best;
     }
 

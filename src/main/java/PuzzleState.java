@@ -105,7 +105,7 @@ public class PuzzleState extends AbstractState {
         return s.toString();
     }
 
-    public PuzzleState twin() {        // a board that is obtained by exchanging two adjacent blocks in the same row
+    public PuzzleState twin() {
         int[][] twinBoard = new int[N][N];
         for (int i=0; i<N; i++){
             for (int j=0; j<N; j++){

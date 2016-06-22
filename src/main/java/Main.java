@@ -22,10 +22,12 @@ public class Main {
         data.add(new int[][]{{2, 3, 5},{1, 4, 0},{7, 8, 6}});
         data.add(new int[][]{{2, 3, 5},{1, 0, 4},{7, 8, 6}});
 
+
         drawDataSet(data);
         AbstractSearch solver;
         solver = new AStarSearch();
         solve(solver, data);
+        // DepthFirstSearch gets lost. Using limited version.
         //solver = new DepthFirstSearch();
         //solve(solver, data );
         solver = new DepthLimitedSearch();
@@ -34,9 +36,9 @@ public class Main {
         solve(solver, data);
         solver = new UniformCostSearch();
         solve(solver, data);
-        solver = new GreedyBFSearch();
-        solve(solver, data);
         solver = new IterativeDeepeningSearch();
+        solve(solver, data);
+        solver = new GreedyBFSearch();
         solve(solver, data);
 
     }

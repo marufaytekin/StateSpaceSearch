@@ -27,7 +27,7 @@ public class Main {
         AbstractSearch solver;
         solver = new AStarSearch();
         solve(solver, data);
-        // DepthFirstSearch gets lost. Using limited version.
+        // DepthFirstSearch gets lost. Comment out to try.
         //solver = new DepthFirstSearch();
         //solve(solver, data );
         solver = new DepthLimitedSearch();
